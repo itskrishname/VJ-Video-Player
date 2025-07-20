@@ -27,7 +27,7 @@ MONGODB_URI = environ.get("MONGODB_URI", "mongodb+srv://Krishna:krishna@cluster0
 STREAM_URL = environ.get("STREAM_URL", "https://filesteambot-e8f1a964ebf8.herokuapp.com/")
 
 # This Link Used As Permanent Link That If Your Deploy App Deleted Then You Change Stream Url, So This Link Will Redirect To Stream Url.
-LINK_URL = environ.get("LINK_URL", "https://newanimeshindidubindia.blogspot.com/2025/06/l.html")
+LINK_URL = environ.get("LINK_URL", "https://newanimeshindidubindia.blogspot.com/2025/06/l.html?")
 
 # Others, Not Usefull
 PORT = environ.get("PORT", "8080")
