@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script>
         var userId = "{{user_id}}";
-	var hasSpent30Seconds = false;
+        var hasSpent30Seconds = false;
         var clickCounted = false;
 
         function setSpentTimeFlag() {
@@ -44,97 +44,214 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Delius">
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.9/plyr.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        .quality-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .video-container {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .navbar-custom {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            backdrop-filter: blur(10px);
+        }
+        .file-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .alert-custom {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+        }
+    </style>
 </head>
 
-<body class="bg-black">
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 min-h-screen">
     <header>
-        <!-- Navbar -->
-            <nav class="navbar bg-dark p-lg-4 p-2">
-               <div class="d-flex ">
-                <!-- web title -->
-                <div class="container-fluid">
-                    <a class="navbar-brand  text-light fw-bold " href="{{link}}">
-                        <span class="bg-clip-text sm:text-[25px] text-[22px] text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-                            {{name}}
-                          </span>
-                    </a>
-                  </div>
-               </div>
-            </nav>
-            <!-- ./Navbar -->
-    </header>
-    <div class="bg-black  text-light"  >
-        <!-- file Name -> to be displayed here  -->
-	<div class="justify-content-center align-items-center w-100 d-flex">
-            <div id="file-name" class="tex-center text-lg max:w-74  p-2 flex-wrap text-center justify-center items-center">
-                <p class="fw-bold"> 
-                    <span id="myDiv" class="h6 flex-wrap text-center font-bold justify-center items-center card-title wow animate__animated animate__fadeInRight" >
-                        {{file_name}}
+        <nav class="navbar navbar-expand-lg navbar-custom p-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="{{link}}">
+                    <i class="bi bi-play-circle-fill me-2 fs-4"></i>
+                    <span class="fs-3 fw-bold">
+                        {{name}}
                     </span>
-                </p>
-            </div>
-	</div>
-        <!-- Online Video Player -> to be displayed here  -->
-        <div class="justify-content-center align-items-center w-100 d-flex  flex-wrap">
-            <div class="lg:w-9/12 lg:px-12 lg:py-4 w-full  border border-danger wow animate__animated animate__fadeInLeft">
-                <video id="player" class="player" playsinline controls>
-                    {% if file_url %}
-                    <source src="{{file_url}}" type="video/mp4" size="480">
-                    {% endif %}
-                    {% if file_url_two %}
-                    <source src="{{file_url_two}}" type="video/mp4" size="720">
-                    {% endif %}
-                    {% if file_url_three %}
-                    <source src="{{file_url_three}}" type="video/mp4" size="1080">
-                    {% endif %}			
-                </video>		    
-            </div>
-		<a href="{{link}}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4">
-                    Join Telegram Channel
                 </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid py-4">
+        <!-- File Information Card -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div class="file-info text-white text-center wow animate__animated animate__fadeInDown">
+                    <h2 class="fw-bold mb-3">
+                        <i class="bi bi-file-earmark-play me-2"></i>
+                        {{file_name}}
+                    </h2>
+                    <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+                        <span class="badge bg-primary fs-6">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Video Player
+                        </span>
+                        {% if file_size %}
+                        <span class="badge bg-success fs-6">
+                            <i class="bi bi-hdd me-1"></i>
+                            {{file_size}}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
 
-            <div class="justify-content-center align-items-center w-100 d-flex mb-3 mt-4">
-                <div class="row d-flex w-100 justify-content-center align-items-center">
-                    <div class="col-lg-8 col-10  py-2 text-center bg-danger rounded-4 text-sm font-bold wow animate__animated animate__FadeIn">
-                            Video Not Playing ? Possibly Because Your Browser Doesn't Support Codec Please Open Link In Another Browser.
+        <!-- Video Player Section -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10 col-md-11 col-12">
+                <div class="video-container wow animate__animated animate__fadeInUp">
+                    <video id="player" class="player w-100" playsinline controls>
+                        {% if file_url %}
+                        <source src="{{file_url}}" type="video/mp4" size="480">
+                        {% endif %}
+                        {% if file_url_two %}
+                        <source src="{{file_url_two}}" type="video/mp4" size="720">
+                        {% endif %}
+                        {% if file_url_three %}
+                        <source src="{{file_url_three}}" type="video/mp4" size="1080">
+                        {% endif %}
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Buttons Section -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div class="glass-effect rounded-4 p-4 wow animate__animated animate__fadeInUp">
+                    <h3 class="text-white text-center mb-4">
+                        <i class="bi bi-download me-2"></i>
+                        Download Options
+                    </h3>
+                    <div class="row g-3 justify-content-center">
+                        {% if file_url %}
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <a href="{{file_url}}" download class="btn download-btn w-100 py-3 d-flex flex-column align-items-center">
+                                <i class="bi bi-download fs-4 mb-2"></i>
+                                <span class="fw-bold">Download 480p</span>
+                                <span class="quality-badge">SD Quality</span>
+                            </a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if file_url_two %}
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <a href="{{file_url_two}}" download class="btn download-btn w-100 py-3 d-flex flex-column align-items-center">
+                                <i class="bi bi-download fs-4 mb-2"></i>
+                                <span class="fw-bold">Download 720p</span>
+                                <span class="quality-badge">HD Quality</span>
+                            </a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if file_url_three %}
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <a href="{{file_url_three}}" download class="btn download-btn w-100 py-3 d-flex flex-column align-items-center">
+                                <i class="bi bi-download fs-4 mb-2"></i>
+                                <span class="fw-bold">Download 1080p</span>
+                                <span class="quality-badge">Full HD</span>
+                            </a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
 
-	    <div class="justify-content-center align-items-center w-100 d-flex mb-3">
-                <div class="row d-flex w-100 justify-content-center align-items-center">
-                    <div class="col-lg-8 col-10  py-2 text-center bg-danger rounded-4 text-sm font-bold wow animate__animated animate__FadeIn">
-                            ⚠️ Disclaimer :- The content available on This Website is for informational and entertainment purposes only. We do not host any videos; all media is sourced from third-party platforms, and we are not responsible for their content or availability. By using our website, you acknowledge that you do so at your own risk, and we encourage you to verify the legality of any content in your jurisdiction.
+        <!-- Telegram Channel Button -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-6 col-md-8 col-12 text-center">
+                <a href="{{link}}" target="_blank" class="btn btn-primary btn-lg px-5 py-3 fs-5 wow animate__animated animate__pulse animate__infinite">
+                    <i class="bi bi-telegram me-2"></i>
+                    Join Our Telegram Channel
+                </a>
+            </div>
+        </div>
+
+        <!-- Information Alerts -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div class="alert alert-custom text-white mb-3 wow animate__animated animate__fadeInUp">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning"></i>
+                        <div>
+                            <strong>Video Not Playing?</strong> Your browser might not support the video codec. Try opening the link in another browser.
+                        </div>
                     </div>
                 </div>
-	    </div>
-	    
+                
+                <div class="alert alert-custom text-white wow animate__animated animate__fadeInUp">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-exclamation me-3 text-info"></i>
+                        <div>
+                            <strong>Disclaimer:</strong> Content on this website is for informational and entertainment purposes only. We do not host videos; all media is sourced from third-party platforms.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-        <footer class="bg-dark justify-content-around align-items-center">
-        <div class="text-center text-xs p-3 dark:text-light text-light gap-2" style="background-color: rgba(0, 0, 0, 0.2);">
-            ©  <script type="text/JavaScript">
-                var theDate=new Date() 
-                    document.write(theDate.getFullYear()) 
-            </script> Copyright :
-                <a class="bg-clip-text text-[16px] text-transparent bg-gradient-to-r from-pink-500 to-violet-500 font-bold tracking-wide px-1" href="{{link}}">{{name}}</a>             
-                All Right Reserved
-            </div>   
-        </footer>
+    <footer class="bg-dark mt-5">
+        <div class="container-fluid py-4">
+            <div class="text-center text-white">
+                <p class="mb-0">
+                    © <script type="text/JavaScript">
+                        var theDate = new Date();
+                        document.write(theDate.getFullYear());
+                    </script> Copyright: 
+                    <a class="text-decoration-none fw-bold" href="{{link}}" style="color: #667eea;">{{name}}</a>
+                    - All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/wow.min.js"></script>
     <script>
         new WOW().init();
-    </script>
-    <script>
-        var div = document.getElementById('myDiv');
-        var text = div.textContent;
-
-        if(text.length > 60){
-            div.textContent = text.slice(0, 60);
-        }
-
     </script>
     
     <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
@@ -152,35 +269,37 @@
             'captions',
             'settings',
             'pip',
-            'airplay',     
+            'airplay',
             'fullscreen'
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
             const player = Plyr.setup('.player', {
-                controls
+                controls,
+                theme: 'dark',
+                ratio: '16:9'
             });
         });
     </script>
-    <!-- disabling right click -->
+    
+    <!-- Disabling right click and keyboard shortcuts -->
     <script>
         document.addEventListener("contextmenu", function (e) {
-        e.preventDefault();
-    });
-    document.addEventListener('keydown', function (e) {
-        if (
-            e.key === 'F12' ||
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.key === 'u') ||
-            e.ctrlKey ||
-            e.shiftKey ||
-            e.altKey
-        ) {
             e.preventDefault();
-        }
-    });
+        });
+        document.addEventListener('keydown', function (e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u') ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.altKey
+            ) {
+                e.preventDefault();
+            }
+        });
     </script>
-    
 </body>
 </html>
 

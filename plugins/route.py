@@ -26,69 +26,266 @@ html_content = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to VJ Disk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            perspective: 1000px;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        .container {
-            transform-style: preserve-3d;
-            animation: rotate 10s infinite linear;
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-
-        @keyframes rotate {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
         }
-
-        h1 {
-            font-size: 4em;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
         }
-
-        p {
-            font-size: 1.5em;
-            margin-top: 20px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
         }
-
-        .button {
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            background-color: #4CAF50; /* Green */
+        
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #4ade80, #22c55e);
             border: none;
-            border-radius: 5px;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: white;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
         }
-
-        .button:hover {
-            background-color: #45a049; /* Darker green */
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .stats-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #4ade80;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome To VJ Disk!</h1>
-        <p>Your ultimate destination for streaming and sharing videos!</p>
-        <p>Explore a world of entertainment at your fingertips.</p>
-        <button class="button" onclick="alert('Explore Now!')">Get Started</button>
+    <div class="hero-section">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title animate__animated animate__fadeInDown">Welcome To VJ Disk</h1>
+            <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                Your ultimate destination for streaming and sharing videos! Experience seamless video streaming, 
+                secure downloads, and a modern interface designed for the best user experience.
+            </p>
+            
+            <div class="feature-grid animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="feature-card">
+                    <i class="bi bi-play-circle-fill feature-icon"></i>
+                    <h3>Stream Videos</h3>
+                    <p>High-quality video streaming with multiple quality options</p>
+                </div>
+                <div class="feature-card">
+                    <i class="bi bi-download feature-icon"></i>
+                    <h3>Download Files</h3>
+                    <p>Secure and fast file downloads with progress tracking</p>
+                </div>
+                <div class="feature-card">
+                    <i class="bi bi-shield-check feature-icon"></i>
+                    <h3>Secure Platform</h3>
+                    <p>Your data is protected with advanced security measures</p>
+                </div>
+            </div>
+            
+            <div class="stats-section animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="row">
+                    <div class="col-md-4 stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="col-md-4 stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Files Shared</div>
+                    </div>
+                    <div class="col-md-4 stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="cta-button animate__animated animate__fadeInUp animate__delay-4s">
+                <i class="bi bi-rocket me-2"></i>
+                Get Started Now
+            </a>
+        </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 """
